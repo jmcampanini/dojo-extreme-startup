@@ -13,6 +13,11 @@ public class ExtremeStartup extends HttpServlet {
 
     public static final String TEAM_NAME = "team kickass";
 
+    private static final String PATTERN_SUM = ".*what is (\\d+) plus (\\d+)";
+    private static final String PATTERN_LARGEST = ".*which of the following numbers is the largest: (.*)";
+    private static final Pattern REGEX_LARGEST = Pattern.compile(PATTERN_LARGEST);
+
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String parameter = req.getParameter("q");
@@ -27,8 +32,6 @@ public class ExtremeStartup extends HttpServlet {
         if (parameter == null)
             return TEAM_NAME;
 
-        String PATTERN_SUM = ".*what is (\\d+) plus (\\d+)";
-        String PATTERN_LARGEST = ".*which of the following numbers is the largest: (.*)";
 
         Pattern regexSum = Pattern.compile(PATTERN_SUM);
         Matcher sumMatcher = regexSum.matcher(parameter);
@@ -41,8 +44,7 @@ public class ExtremeStartup extends HttpServlet {
             return sum;
         }
 
-        Pattern regexLargest = Pattern.compile(PATTERN_LARGEST);
-        Matcher largetsMatcher = regexLargest.matcher(parameter);
+        Matcher largetsMatcher = REGEX_LARGEST.matcher(parameter);
         if (largetsMatcher.matches()) {
             String listOfNumbers = largetsMatcher.group(1);
             OptionalInt optionalMax = Splitter.on(",")
