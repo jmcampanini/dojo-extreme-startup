@@ -36,4 +36,9 @@ public class RequestAnswerShould {
         assertThat(requestAnswer.answer("a1087040: which of the following numbers is both a square and a cube: 671, 4, 64, 475"),
                    is("64"));
     }
+    
+    @Test public void
+    when_request_is_multiply() {
+    	assertThat(requestAnswer.answer("f2ab7470: what is the 5th number in the Fibonacci sequence"), is("5"));
+    }
 }

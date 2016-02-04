@@ -17,6 +17,7 @@ public class RequestAnswer {
     Pattern twoSumPattern2 = Pattern.compile(".*what is (\\d+) plus (\\d+)");
     Pattern largestPattern = Pattern.compile(".*which of the following numbers is the largest: (.*)");
     Pattern cubePattern = Pattern.compile(".*which of the following numbers is both a square and a cube: (.*)");
+    Pattern fibPattern = Pattern.compile("f2ab7470: what is the (\\d+)th number in the Fibonacci sequence");
     Map< Pattern, Function< Matcher, String > > matchers;
 
     public RequestAnswer() {
@@ -26,6 +27,7 @@ public class RequestAnswer {
                 .put(twoSumPattern2, RequestAnswer::sum)
                 .put(largestPattern, RequestAnswer::largest)
                 .put(cubePattern, RequestAnswer::findSquareAndCube)
+                .put(fibPattern, RequestAnswer::findFib)
                 .build();
     }
 
@@ -85,5 +87,17 @@ public class RequestAnswer {
         }
 
         return "";
+    }
+    
+    private static String findFib(Matcher matcher) {
+    	int index = Integer.parseInt(matcher.group(1));
+    	logger.info("find {}th fib number", index);
+    	
+    	return String.valueOf(fib(index));
+    }
+    
+    private static int fib(int n) {
+        if (n <= 1) return n;
+        else return fib(n-1) + fib(n-2);
     }
 }
