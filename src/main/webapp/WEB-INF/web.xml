@@ -5,7 +5,7 @@
   
   <servlet>
     <servlet-name>extremeStartup</servlet-name>
-    <servlet-class>ExtremeStartup</servlet-class>
+    <servlet-class>com.palantir.ExtremeStartup</servlet-class>
   </servlet>
 
   <servlet-mapping>

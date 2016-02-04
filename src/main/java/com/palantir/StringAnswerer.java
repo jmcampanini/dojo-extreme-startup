@@ -1,3 +1,5 @@
+package com.palantir;
+
 public class StringAnswerer {
     private final int answer;
 
