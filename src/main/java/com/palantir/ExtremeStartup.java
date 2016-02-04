@@ -28,11 +28,6 @@ public class ExtremeStartup extends HttpServlet {
     String answer(String parameter) {
         if (parameter == null)
             return "Scala Rulez";
-        Matcher additionMatcher = Pattern.compile(".*what is the sum of (\\d+) and (\\d+)").matcher(parameter);
-        if (additionMatcher.matches()) {
-            return String.valueOf(Integer.parseInt(additionMatcher.group(1))
-                    + Integer.parseInt(additionMatcher.group(2)));
-        }
         String response = requestAnswer.answer(parameter);
         logger.info("Returning response: " + response);
         return response;
