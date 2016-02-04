@@ -1,10 +1,12 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
+apply plugin: "application"
 
 repositories {
   mavenCentral()
 }
+mainClassName="com.palantir.ExtremeStartupServer"
 
 dependencies {
   compile 'org.eclipse.jetty.aggregate:jetty-webapp:7.6.0.v20120127'
