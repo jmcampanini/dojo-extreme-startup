@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -14,7 +16,7 @@ public class RequestAnswer {
     Pattern twoSumPattern  = Pattern.compile(".*what is the sum of (\\d+) and (\\d+)");
     Pattern twoSumPattern2 = Pattern.compile(".*what is (\\d+) plus (\\d+)");
     Pattern largestPattern = Pattern.compile(".*which of the following numbers is the largest: (.*)");
-
+    Pattern cubePattern = Pattern.compile(".*which of the following numbers is both a square and a cube: (.*)");
     Map< Pattern, Function< Matcher, String > > matchers;
 
     public RequestAnswer() {
@@ -23,6 +25,7 @@ public class RequestAnswer {
                 .put(twoSumPattern, RequestAnswer::sum)
                 .put(twoSumPattern2, RequestAnswer::sum)
                 .put(largestPattern, RequestAnswer::largest)
+                .put(cubePattern, RequestAnswer::findSquareAndCube)
                 .build();
     }
 
@@ -61,5 +64,26 @@ public class RequestAnswer {
             }
         }
         return String.valueOf(max);
+    }
+    private static String findSquareAndCube(Matcher matcher) {
+        String group = matcher.group(1);
+        logger.info("find square and cube {}", group);
+        String[] splits = group.split(", ");
+
+        List<Integer> values = new ArrayList<Integer>();
+        values.add(0);
+        values.add(1);
+        values.add(64);
+        values.add(729);
+        values.add(15625);
+
+        for (String numberStr : splits) {
+            Integer number = Integer.parseInt(numberStr);
+            if (values.contains(number)) {
+                return number.toString();
+            }
+        }
+
+        return "";
     }
 }
