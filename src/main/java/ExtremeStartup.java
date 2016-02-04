@@ -1,15 +1,13 @@
 import com.google.common.base.Splitter;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.OptionalInt;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.OptionalInt;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ExtremeStartup extends HttpServlet {
 
@@ -29,12 +27,6 @@ public class ExtremeStartup extends HttpServlet {
         if (parameter == null)
             return TEAM_NAME;
 
-//        Matcher additionMatcher = Pattern.compile(".*what is the sum of (\\d+) and (\\d+)").matcher(parameter);
-//        if (additionMatcher.matches()) {
-//            return String.valueOf(Integer.parseInt(additionMatcher.group(1))
-//                    + Integer.parseInt(additionMatcher.group(2)));
-//        }
-
         String PATTERN_SUM = ".*what is (\\d+) plus (\\d+)";
         String PATTERN_LARGEST = ".*which of the following numbers is the largest: (.*)";
 
@@ -42,7 +34,7 @@ public class ExtremeStartup extends HttpServlet {
         Matcher sumMatcher = regexSum.matcher(parameter);
         if (sumMatcher.matches()) {
             int first = Integer.parseInt(sumMatcher.group(1));
-            int second= Integer.parseInt(sumMatcher.group(2));
+            int second = Integer.parseInt(sumMatcher.group(2));
 
             String sum = Integer.toString(first + second);
             System.out.println("answer for sum: " + sum);
@@ -50,11 +42,16 @@ public class ExtremeStartup extends HttpServlet {
         }
 
         Pattern regexLargest = Pattern.compile(PATTERN_LARGEST);
-
         Matcher largetsMatcher = regexLargest.matcher(parameter);
         if (largetsMatcher.matches()) {
             String listOfNumbers = largetsMatcher.group(1);
-            OptionalInt optionalMax = Splitter.on(",").omitEmptyStrings().trimResults().splitToList(listOfNumbers).stream().mapToInt(Integer::parseInt).max();
+            OptionalInt optionalMax = Splitter.on(",")
+                    .omitEmptyStrings()
+                    .trimResults()
+                    .splitToList(listOfNumbers)
+                    .stream()
+                    .mapToInt(Integer::parseInt)
+                    .max();
 
             int maxValue = optionalMax.orElse(0);
             System.out.println("answer for max: " + maxValue);
@@ -62,9 +59,13 @@ public class ExtremeStartup extends HttpServlet {
         }
 
 
-        System.out.println("NEW QUESTION");
-        System.out.println("NEW QUESTION");
-        System.out.println("NEW QUESTION");
+        alertNewQuestion();
         return TEAM_NAME;
+    }
+
+    private void alertNewQuestion() {
+        System.out.println("NEW QUESTION");
+        System.out.println("NEW QUESTION");
+        System.out.println("NEW QUESTION");
     }
 }
